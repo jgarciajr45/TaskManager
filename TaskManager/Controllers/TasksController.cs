@@ -19,8 +19,8 @@ namespace TaskManager.Controllers
         // GET: Tasks
         public async Task<IActionResult> Index()
         {
-            var tasks = await _context.Tasks.Include(t => t.User).ToListAsync();
-            return View(tasks);
+            var tasks = _context.Tasks.Include(t => t.User);
+            return View(await tasks.ToListAsync());
         }
 
         // GET: Tasks/Details/5
@@ -34,6 +34,7 @@ namespace TaskManager.Controllers
             var task = await _context.Tasks
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.TaskId == id);
+
             if (task == null)
             {
                 return NotFound();
@@ -126,6 +127,7 @@ namespace TaskManager.Controllers
             var task = await _context.Tasks
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.TaskId == id);
+
             if (task == null)
             {
                 return NotFound();
@@ -140,11 +142,6 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Tasks.FindAsync(id);
-            if (task == null)
-            {
-                return NotFound();
-            }
-
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -156,5 +153,4 @@ namespace TaskManager.Controllers
         }
     }
 }
-
 
