@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.Models; // Your Task model
-using System.Threading.Tasks; // For asynchronous operations
-using TaskModel = TaskManager.Models.Task; // Alias for your Task model
+using TaskManager.Models;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TaskManager.Controllers
@@ -17,14 +17,14 @@ namespace TaskManager.Controllers
         }
 
         // GET: Tasks
-        public async System.Threading.Tasks.Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var tasks = await _context.Tasks.Include(t => t.User).ToListAsync();
             return View(tasks);
         }
 
         // GET: Tasks/Details/5
-        public async System.Threading.Tasks.Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -52,7 +52,7 @@ namespace TaskManager.Controllers
         // POST: Tasks/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<IActionResult> Create([Bind("TaskId,Title,Description,Status,UserId")] TaskModel task)
+        public async Task<IActionResult> Create([Bind("TaskId,Title,Description,Status,UserId")] TaskManager.Models.Task task)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace TaskManager.Controllers
         }
 
         // GET: Tasks/Edit/5
-        public async System.Threading.Tasks.Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -84,7 +84,7 @@ namespace TaskManager.Controllers
         // POST: Tasks/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<IActionResult> Edit(int id, [Bind("TaskId,Title,Description,Status,UserId")] TaskModel task)
+        public async Task<IActionResult> Edit(int id, [Bind("TaskId,Title,Description,Status,UserId")] TaskManager.Models.Task task)
         {
             if (id != task.TaskId)
             {
@@ -116,7 +116,7 @@ namespace TaskManager.Controllers
         }
 
         // GET: Tasks/Delete/5
-        public async System.Threading.Tasks.Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace TaskManager.Controllers
         // POST: Tasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Tasks.FindAsync(id);
             if (task == null)
