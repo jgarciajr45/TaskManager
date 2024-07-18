@@ -7,9 +7,11 @@ namespace TaskManager.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            Users = Set<User>();
+            Tasks = Set<Task>();
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<User> Users { get; set; } = default!;
+        public DbSet<Task> Tasks { get; set; } = default!;
     }
 }

@@ -12,8 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\Users\" />
+    <None Remove="Views\Tasks\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Users\" />
+    <Folder Include="Views\Tasks\" />
   </ItemGroup>
 </Project>

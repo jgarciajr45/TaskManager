@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TaskManager.Models;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.Models;
 
 namespace TaskManager.Controllers
 {
@@ -131,6 +130,11 @@ namespace TaskManager.Controllers
         public IActionResult DeleteConfirmed(int id)
         {
             var user = _context.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             _context.Users.Remove(user);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
